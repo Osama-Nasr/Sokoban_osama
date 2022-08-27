@@ -1,0 +1,23 @@
+the size of the world and the position of the objects
+the ~Item when to use and why it was calling while running the level
+the delay that was used in the game.cpp why it was blinking
+is frames important??? if yes we need to fix it
+
+freeing the memory for the level 
+descourtors in the code
+Again follow the behavaiour of the descrutors
+
+ask lui about if i can create an object of new if it can inheart;
+
+class item{};
+class player :public item{};
+item** map = new item[3];
+for(int i = 0; i<3; i++)
+item[i] = new player();
+
+ see if i can do the recusion or iterator in the checkMove() function speacilly in for checking the second object movement
+
+***consider to add the convertion between the position and the x;y for the objects or set the place of drawing only it depends
+***during the move check the we can move that to a funciton I belive or I need to check it again
+*** the images of the empty I might consider to change them to " " or I have to make the image to null
+*** the map the position of the goal can't be swapped but I didn't want to make uninizilaed so for that I initilzed the type to target

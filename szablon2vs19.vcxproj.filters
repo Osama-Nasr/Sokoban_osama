@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{20dda150-57c7-4c47-94ad-3e2f18ed6111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="image">
+      <UniqueIdentifier>{ae9d181e-1252-4a0a-aeb5-3cbb92b4e82f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="levels">
+      <UniqueIdentifier>{2351f140-c27b-466c-b08c-17ca840d58de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Notes">
+      <UniqueIdentifier>{e3663ade-c0ff-4f7e-b682-816385718df5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Actions.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Actions.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Draw.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="image\box.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\cs8x8.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\eti.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\goal.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\player.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\player_not_croped.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="image\wall.bmp">
+      <Filter>image</Filter>
+    </Image>
+    <Image Include="mapMind.png">
+      <Filter>Notes</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Levels\lvl1.txt">
+      <Filter>levels</Filter>
+    </Text>
+    <Text Include="Levels\lvl2.txt">
+      <Filter>levels</Filter>
+    </Text>
+    <Text Include="Levels\lvl3.txt">
+      <Filter>levels</Filter>
+    </Text>
+    <Text Include="notes\Questions.txt">
+      <Filter>Notes</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
