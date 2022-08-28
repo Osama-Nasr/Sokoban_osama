@@ -255,7 +255,7 @@ Actions::~Actions()
 }
 
 
-void Actions::takePlayerActions(SDL_Event event, int& quit, Level level)
+void Actions::takePlayerActions(SDL_Event event, int& quit, Level level, int lvl, SDL_Renderer* renderer)
 {
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -285,6 +285,10 @@ void Actions::takePlayerActions(SDL_Event event, int& quit, Level level)
 					level.movePlayer(direction::LEFT);
 				}
 				//player.setPlayerSpeedx(player.getSpeedX_left());
+				break;
+			case SDLK_n:
+				level.clearMap();
+				level.PlaySpeacificLevel(lvl, renderer);
 				break;
 			case SDLK_SPACE:
 				//player.shoot();

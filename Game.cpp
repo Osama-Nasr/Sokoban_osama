@@ -127,8 +127,7 @@ void Game::game()
 
 		updatingScreen();
 	
-
-		action.takePlayerActions(event, quit, level);
+		action.takePlayerActions(event, quit, level, this->lvl, renderer);
 		
 		if (sequentail == true)
 			level.playSeqaunceLevels();
@@ -137,6 +136,7 @@ void Game::game()
 				level.PlaySpeacificLevel(lvl, renderer);
 
 		level.drawMap();
+		mContinueMenu = level.checkWin();
 		SDL_RenderPresent(renderer);
 		SDL_Delay(500);
 		//level.drawTest();

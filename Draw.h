@@ -21,6 +21,7 @@ public:
 	void TextStartingMenu(SDL_Surface* screen, SDL_Surface* eti);
 	void TextOptions(SDL_Surface *screen, SDL_Surface* eti, double& enemyShootEverySEC, int activeOption, /*Player player,*/ int level, bool sequentail);
 	void TextGame(SDL_Surface* screen, double worldTime, double fps, int numberOfHits, int numberOfgettingShooted, int points);
+	void winMessage(SDL_Surface* screen);
 	void TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, int points);
 
 	void DrawString(SDL_Surface* screen, int x, int y, const char* text);

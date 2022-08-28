@@ -50,14 +50,31 @@ void Draw::TextGame(SDL_Surface* screen, double worldTime, double fps, int numbe
 	int green = SDL_MapRGB(screen->format, 0x00, 0xFF, 0x00);
 	int red = SDL_MapRGB(screen->format, 0xFF, 0x00, 0x00);
 	int blue = SDL_MapRGB(screen->format, 0x11, 0x11, 0xCC);
+	int white = SDL_MapRGB(screen->format, 255, 255, 255);
 
-	DrawRectangle(screen, 4, 4, game::SCREEN_WIDTH - 8, 36, red, blue);
+	DrawRectangle(screen, 4, 4, game::SCREEN_WIDTH - 8, 36, white, blue);
 	//            "template for the second project, elapsed time = %.1lf s  %.0lf frames / s"
 	sprintf(text, "Esc - exit, elapsed time = %.1lf s  %.0lf frames / s", worldTime, fps);
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 10, text);
 	//	      "Esc - exit, \030 - faster, \031 - slower"
-	sprintf(text, "space for shooting, hits: %d, got hit: %d, Total points: %d", numberOfHits, numberOfgettingShooted, points);
+	sprintf(text, "N - play again, hits: %d, got hit: %d, Total points: %d", numberOfHits, numberOfgettingShooted, points);
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text);
+}
+
+void Draw::winMessage(SDL_Surface* screen) {
+
+	int black = SDL_MapRGB(screen->format, 0x00, 0x00, 0x00);
+	int green = SDL_MapRGB(screen->format, 0x00, 0xFF, 0x00);
+	int red = SDL_MapRGB(screen->format, 0xFF, 0x00, 0x00);
+	int blue = SDL_MapRGB(screen->format, 0x11, 0x11, 0xCC);
+
+	//DrawRectangle(screen, 4, 4, game::SCREEN_WIDTH - 8, 36, red, blue);
+	////            "template for the second project, elapsed time = %.1lf s  %.0lf frames / s"
+	//sprintf(text, "Esc - exit, elapsed time = %.1lf s  %.0lf frames / s", worldTime, fps);
+	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 10, text);
+	////	      "Esc - exit, \030 - faster, \031 - slower"
+	//sprintf(text, "N - play again, hits: %d, got hit: %d, Total points: %d", numberOfHits, numberOfgettingShooted, points);
+	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text);
 }
 
 void Draw::TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, int points)
