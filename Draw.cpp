@@ -8,7 +8,7 @@ void Draw::TextStartingMenu(SDL_Surface* screen, SDL_Surface* eti)
 	int blue = SDL_MapRGB(screen->format, 0x11, 0x11, 0xCC);
 	DrawRectangle(screen, 4, 4, game::SCREEN_WIDTH - 8, game::SCREEN_HEIGHT - 8, red, blue);
 	DrawSurface(screen, eti, game::SCREEN_WIDTH / 2, game::SCREEN_HEIGHT / 2 - 150);
-	sprintf(text, "Welcome to Bullet Hell game");
+	sprintf(text, "Welcome to Sokoban");
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 - 30, text);
 	sprintf(text, "Press O for options");
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2, text);
@@ -23,9 +23,9 @@ void Draw::TextOptions(SDL_Surface* screen, SDL_Surface* eti, double& enemyShoot
 	int red = SDL_MapRGB(screen->format, 0xFF, 0x00, 0x00);
 	int blue = SDL_MapRGB(screen->format, 0x11, 0x11, 0xCC);
 	
-	string SequetailText;
+	char* SequetailText;
 	if (sequentail == true)
-		SequetailText = 'YES';
+		SequetailText = "Yes";
 	else
 		SequetailText = "NO";
 
@@ -52,7 +52,7 @@ void Draw::TextGame(SDL_Surface* screen, double worldTime, double fps, int numbe
 	int blue = SDL_MapRGB(screen->format, 0x11, 0x11, 0xCC);
 	int white = SDL_MapRGB(screen->format, 255, 255, 255);
 
-	DrawRectangle(screen, 4, 4, game::SCREEN_WIDTH - 8, 36, white, blue);
+	DrawRectangle(screen, 4, 4, game::SCREEN_WIDTH - 8, 36, red, blue);
 	//            "template for the second project, elapsed time = %.1lf s  %.0lf frames / s"
 	sprintf(text, "Esc - exit, elapsed time = %.1lf s  %.0lf frames / s", worldTime, fps);
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 10, text);
@@ -67,14 +67,15 @@ void Draw::winMessage(SDL_Surface* screen) {
 	int green = SDL_MapRGB(screen->format, 0x00, 0xFF, 0x00);
 	int red = SDL_MapRGB(screen->format, 0xFF, 0x00, 0x00);
 	int blue = SDL_MapRGB(screen->format, 0x11, 0x11, 0xCC);
+	int darkRed = SDL_MapRGB(screen->format, 210, 45, 45);
+	int white = SDL_MapRGB(screen->format, 255, 255, 255);
 
-	//DrawRectangle(screen, 4, 4, game::SCREEN_WIDTH - 8, 36, red, blue);
-	////            "template for the second project, elapsed time = %.1lf s  %.0lf frames / s"
-	//sprintf(text, "Esc - exit, elapsed time = %.1lf s  %.0lf frames / s", worldTime, fps);
-	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 10, text);
-	////	      "Esc - exit, \030 - faster, \031 - slower"
-	//sprintf(text, "N - play again, hits: %d, got hit: %d, Total points: %d", numberOfHits, numberOfgettingShooted, points);
-	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text);
+	DrawRectangle(screen, 200, 150, 380, 50, white, blue);
+	//DrawRectangle(screen, 4, 4, /*game::SCREEN_WIDTH - 8*/game::SCREEN_WIDTH - 440, 36, red, blue);
+	sprintf(text, "Congrates you WON");
+	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 10, text);
+	sprintf(text, "P - next level, M - menu");
+	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text);
 }
 
 void Draw::TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, int points)
@@ -86,11 +87,13 @@ void Draw::TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, int points)
 
 	DrawRectangle(screen, 4, 4, game::SCREEN_WIDTH - 8, game::SCREEN_HEIGHT - 8, red, blue);
 	DrawSurface(screen, eti, game::SCREEN_WIDTH / 2, game::SCREEN_HEIGHT / 2 - 150);
-	sprintf(text, "Continue? Press c if so, or press ESC to exit, or press n for menu");
+	sprintf(text, "Congrates you WON");
+	//sprintf(text, "Continue? Press c if so, or press ESC to exit, or press n for menu");
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 - 30, text);
 	sprintf(text, "Your score is %d", points);
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2, text);
-	sprintf(text, "want to go to level 1 press 1 & level 2 press 2 and so on");
+	//sprintf(text, "want to go to level 1 press 1 & level 2 press 2 and so on");
+	sprintf(text, "P - next level, M - menu");
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 30, text);
 }
 

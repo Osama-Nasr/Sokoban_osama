@@ -20,7 +20,7 @@ private:
 	bool mMenu = 1;
 	int activeOption = 0;
 	bool mContinueMenu = 0;
-	int lvl = 3;
+	int lvl = 1;
 	bool sequentail = false;
 
 	double enemyShootEverySEC = 1.0;

@@ -29,20 +29,21 @@ public:
 	void playSeqaunceLevels();
 	void clearMap();
 	void drawMap();
-	bool getMapInit();
 	bool checkMove(int moveDirection);
 	void movePlayer(int moveDirection);
 	void swapObjects(Item& old, Item& mNew);	//https://www.geeksforgeeks.org/passing-reference-to-a-pointer-in-c/
 	void show();
 	void updatingPositions(int xNewPosition, int yNewPosition, char playerOrBox);			//this is for the changing the like position and image after swaping them
 	bool checkWin();
-	//void drawTest();
+
+	void setMapInit(bool mapInit);
+	bool getMapInit();
+
 	Item** map;
 	Item* goal[game::MAX_GOALS];
 	int goalsNumber = 0;
 private:
-	Item* player;
-	//Item test;
+	Item *player;
 	int j, i;
 	bool mapInit = false;
 

@@ -115,25 +115,25 @@ void Actions::takeActionForOption(SDL_Event event,/* Player& player,*/ bool opti
 	}
 }
 
-void Actions::takeActionStartingMenu(SDL_Event event, int& quit, bool& options, bool& mMenu)
+void Actions::takeActionStartingMenu(SDL_Event event, int& quit, bool& options, bool& mMenu, Time& time)
 {
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_KEYDOWN:
-			if (event.key.keysym.sym == SDLK_ESCAPE) quit = 1;
-			else if (event.key.keysym.sym == SDLK_d)
+			switch (event.key.keysym.sym)
 			{
-				//movementMode = (movementMode + 1) % 2;
-			}
-			else if (event.key.keysym.sym == SDLK_o)
-			{
+			case SDLK_o:
 				options = (options + 1) % 2;
-			}
-			else if (event.key.keysym.sym == SDLK_s)
-			{
+				break;
+			case SDLK_s:
 				mMenu = 0;
-				//points = 0;
-				//heartCount = 0;
+				time.setWorldTime(0.0);
+				break;
+			case SDLK_ESCAPE:
+				quit = 1;
+				break;
+			default:
+				break;
 			}
 			break;
 		case SDL_KEYUP:
@@ -145,117 +145,153 @@ void Actions::takeActionStartingMenu(SDL_Event event, int& quit, bool& options, 
 	};
 }
 
-void Actions::takeActionsContinueMenu(SDL_Event event, int& quit, bool& mMenu, bool& mContinueMenu, int& numberOfHits, int& numberOfgettingShooted
-,/*Player& player,*/ int& points,/* Enemy** enemies,*/ int& lvl)
+void Actions::takeActionsContinueMenu(SDL_Event event, Level& level, Time& time, int& quit, bool& mMenu, bool& mContinueMenu, int& points, int& lvl, SDL_Renderer* renderer)
 {
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_KEYDOWN:
-			if (event.key.keysym.sym == SDLK_ESCAPE) quit = 1;
-			/*else if (event.key.keysym.sym == SDLK_d)
+			switch (event.key.keysym.sym)
 			{
-				movementMode = (movementMode + 1) % 2;
-			}*/
-			else if (event.key.keysym.sym == SDLK_n)
-			{
+			case SDLK_p:
+				lvl = (lvl + 1) % (game::total_levels + 1);		//the purpose of the 1 is to make the ciercal of the incearse and to make it go to the last number as well
+				if (lvl == 0)
+					lvl = 1;
+				mContinueMenu = 0;
+				time.setWorldTime(0.0);
+				level.clearMap();
+				level.PlaySpeacificLevel(lvl, renderer);
+
+				break;
+			case SDLK_m:
 				mMenu = 1;
 				mContinueMenu = 0;
-				numberOfHits = 0;
-				numberOfgettingShooted = 0;
-				//player.blood = 1.0f;
-				points = 0;
-				//player.setPos(320, 370);
-				/*for (int i = 0; i < numberOfenemies; i++)
-				{
-					enemies[i]->blood = 1.0f;
-					enemies[i]->setLife(true);
-				}*/
-			}
-			else if (event.key.keysym.sym == SDLK_c)
-			{
-				//player.setPos(320, 370);
-				mContinueMenu = 0;
-				points = 0;
-			//	player.blood = 1.0f;
-				/*for (int i = 0; i < numberOfenemies; i++)
-				{
-					enemies[i]->blood = 1.0f;
-					enemies[i]->setLife(true);
-				}*/
-			}
-			else if (event.key.keysym.sym == SDLK_1)
-			{
-				//player.setPos(320, 370);
-				mContinueMenu = 0;
-				points = 0;
-				//player.blood = 1.0f;
-				lvl = 0;
-				/*for (int i = 0; i < numberOfenemies; i++)
-				{
-					enemies[i]->blood = 1.0f;
-					enemies[i]->setLife(true);
-				}*/
-			}
-			else if (event.key.keysym.sym == SDLK_2)
-			{
-				//player.setPos(320, 370);
-				mContinueMenu = 0;
-				points = 0;
-				//player.blood = 1.0f;
-				lvl = 1;
-				/*for (int i = 0; i < numberOfenemies; i++)
-				{
-					enemies[i]->blood = 1.0f;
-					enemies[i]->setLife(true);
-				}*/
-			}
-			else if (event.key.keysym.sym == SDLK_3)
-			{
-				//player.setPos(320, 370);
-				mContinueMenu = 0;
-				points = 0;
-				//player.blood = 1.0f;
-				lvl = 2;
-				/*for (int i = 0; i < numberOfenemies; i++)
-				{
-					enemies[i]->blood = 1.0f;
-					enemies[i]->setLife(true);
-				}*/
-			}
-			else if (event.key.keysym.sym == SDLK_4)
-			{
-				//player.setPos(320, 370);
-				mContinueMenu = 0;
-				points = 0;
-				//player.blood = 1.0f;
-				lvl = 3;
-				/*for (int i = 0; i < numberOfenemies; i++)
-				{
-					enemies[i]->blood = 1.0f;
-					enemies[i]->setLife(true);
-				}*/
+				level.clearMap();
+				level.setMapInit(false);
+
+				break;
+			case SDLK_ESCAPE:
+				quit = 1;
+			default:
+				break;
 			}
 			break;
 		case SDL_KEYUP:
-			//etiSpeed = 1.0;
 			break;
 		case SDL_QUIT:
 			quit = 1;
 			break;
 		};
+		//SDL_Delay(20);
 	};
+	//while (SDL_PollEvent(&event)) {
+	//	switch (event.type) {
+	//	case SDL_KEYDOWN:
+	//		switch (event.key.keysym.sym) {
+	//		case SDLK_ESCAPE: {
+	//			quit = 1;
+	//		}
+	//			break;
+	//		case SDLK_p:
+
+	//		if (event.key.keysym.sym == SDLK_ESCAPE) quit = 1;
+	//		/*else if (event.key.keysym.sym == SDLK_d)
+	//		{
+	//			movementMode = (movementMode + 1) % 2;
+	//		}*/
+	//		else if (event.key.keysym.sym == SDLK_n)
+	//		{
+	//			mMenu = 1;
+	//			mContinueMenu = 0;
+	//			numberOfHits = 0;
+	//			numberOfgettingShooted = 0;
+	//			//player.blood = 1.0f;
+	//			points = 0;
+	//			//player.setPos(320, 370);
+	//			/*for (int i = 0; i < numberOfenemies; i++)
+	//			{
+	//				enemies[i]->blood = 1.0f;
+	//				enemies[i]->setLife(true);
+	//			}*/
+	//		}
+	//		else if (event.key.keysym.sym == SDLK_c)
+	//		{
+	//			//player.setPos(320, 370);
+	//			mContinueMenu = 0;
+	//			points = 0;
+	//		//	player.blood = 1.0f;
+	//			/*for (int i = 0; i < numberOfenemies; i++)
+	//			{
+	//				enemies[i]->blood = 1.0f;
+	//				enemies[i]->setLife(true);
+	//			}*/
+	//		}
+	//		else if (event.key.keysym.sym == SDLK_1)
+	//		{
+	//			//player.setPos(320, 370);
+	//			mContinueMenu = 0;
+	//			points = 0;
+	//			//player.blood = 1.0f;
+	//			lvl = 0;
+	//			/*for (int i = 0; i < numberOfenemies; i++)
+	//			{
+	//				enemies[i]->blood = 1.0f;
+	//				enemies[i]->setLife(true);
+	//			}*/
+	//		}
+	//		else if (event.key.keysym.sym == SDLK_2)
+	//		{
+	//			//player.setPos(320, 370);
+	//			mContinueMenu = 0;
+	//			points = 0;
+	//			//player.blood = 1.0f;
+	//			lvl = 1;
+	//			/*for (int i = 0; i < numberOfenemies; i++)
+	//			{
+	//				enemies[i]->blood = 1.0f;
+	//				enemies[i]->setLife(true);
+	//			}*/
+	//		}
+	//		else if (event.key.keysym.sym == SDLK_3)
+	//		{
+	//			//player.setPos(320, 370);
+	//			mContinueMenu = 0;
+	//			points = 0;
+	//			//player.blood = 1.0f;
+	//			lvl = 2;
+	//			/*for (int i = 0; i < numberOfenemies; i++)
+	//			{
+	//				enemies[i]->blood = 1.0f;
+	//				enemies[i]->setLife(true);
+	//			}*/
+	//		}
+	//		else if (event.key.keysym.sym == SDLK_4)
+	//		{
+	//			//player.setPos(320, 370);
+	//			mContinueMenu = 0;
+	//			points = 0;
+	//			//player.blood = 1.0f;
+	//			lvl = 3;
+	//			/*for (int i = 0; i < numberOfenemies; i++)
+	//			{
+	//				enemies[i]->blood = 1.0f;
+	//				enemies[i]->setLife(true);
+	//			}*/
+	//		}
+
+	//	}
+	//		break;
+	//	case SDL_KEYUP:
+	//		//etiSpeed = 1.0;
+	//		break;
+	//	case SDL_QUIT:
+	//		quit = 1;
+	//		break;
+	//	};
+	//};
 }
 
-Actions::Actions()
-{
-}
 
-Actions::~Actions()
-{
-}
-
-
-void Actions::takePlayerActions(SDL_Event event, int& quit, Level level, int lvl, SDL_Renderer* renderer)
+void Actions::takePlayerActions(SDL_Event event, int& quit, Level &level, int lvl, SDL_Renderer* renderer)
 {
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -263,32 +299,29 @@ void Actions::takePlayerActions(SDL_Event event, int& quit, Level level, int lvl
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_UP:
-				if (level.checkMove(direction::UP)) { 
+				if (level.checkMove(direction::UP)) 
 					level.movePlayer(direction::UP);
-				}
-				//player.setPlayerSpeedy(player.getSpeedY_up());
+		
 				break;
 			case SDLK_DOWN:
-				if (level.checkMove(direction::DOWN)) {
+				if (level.checkMove(direction::DOWN)) 
 					level.movePlayer(direction::DOWN);
-				}
-				//player.setPlayerSpeedy(player.getSpeedY_down());
+	
 				break;
 			case SDLK_RIGHT:
-				if (level.checkMove(direction::RIGHT)) {
+				if (level.checkMove(direction::RIGHT)) 
 					level.movePlayer(direction::RIGHT);
-				}
-				//player.setPlayerSpeedx(player.getSpeedX_right());
+
 				break;
 			case SDLK_LEFT:
-				if (level.checkMove(direction::LEFT)) {
+				if (level.checkMove(direction::LEFT)) 
 					level.movePlayer(direction::LEFT);
-				}
-				//player.setPlayerSpeedx(player.getSpeedX_left());
+
 				break;
 			case SDLK_n:
 				level.clearMap();
 				level.PlaySpeacificLevel(lvl, renderer);
+				
 				break;
 			case SDLK_SPACE:
 				//player.shoot();
@@ -299,33 +332,18 @@ void Actions::takePlayerActions(SDL_Event event, int& quit, Level level, int lvl
 				break;
 			}
 			break;
-		case SDL_KEYUP:
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_UP:
-				//player.setPlayerSpeedy(0);
-				break;
-			case SDLK_DOWN:
-				//player.setPlayerSpeedy(0);
-				break;
-			case SDLK_RIGHT:
-				//player.setPlayerSpeedx(0);
-				break;
-			case SDLK_LEFT:
-				//player.setPlayerSpeedx(0);
-				break;
-			case SDLK_ESCAPE:
-				quit = 1;
-				break;
-			default:
-				break;
-			}
-			break;
 		case SDL_QUIT:
 			quit = 1;
 			break;
 		};
-
 		//SDL_Delay(20);
 	};
+}
+
+Actions::Actions()
+{
+}
+
+Actions::~Actions()
+{
 }

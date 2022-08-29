@@ -8,6 +8,7 @@ namespace game {
 	const int item_size_width = 50;
 	const int item_size_high = 50;
 	const int MAX_GOALS = 7;
+	const int total_levels = 3;	
 };
 
 namespace direction {

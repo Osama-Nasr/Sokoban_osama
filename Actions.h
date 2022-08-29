@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Level.h"
+#include "Time.h"
 using namespace std;
 
 extern "C" {
@@ -13,10 +14,9 @@ class Actions
 public:
 	void takeActionForOption(SDL_Event event,/* Player& player,*/ bool options, int activeOption,
 		double& enemyShootEverySEC, int& level, int& quit, bool& sequentail);
-	void takeActionStartingMenu(SDL_Event event, int& quit, bool& options, bool& mMenu);
-	void takePlayerActions(SDL_Event event, int& quit, Level level, int lvl, SDL_Renderer* renderer);
-	void takeActionsContinueMenu(SDL_Event event, int& quit, bool& mMenu, bool& mContinueMenu, int& numberOfHits, int& numberOfgettingShooted
-		,/*Player& player,*/ int& points,/* Enemy** enemies,*/ int& lvl);
+	void takeActionStartingMenu(SDL_Event event, int& quit, bool& options, bool& mMenu, Time& time);
+	void takePlayerActions(SDL_Event event, int& quit, Level &level, int lvl, SDL_Renderer* renderer);
+	void takeActionsContinueMenu(SDL_Event event, Level& level, Time& time, int& quit, bool& mMenu, bool& mContinueMenu, int& points, int& lvl, SDL_Renderer* renderer);
 
 	Actions();
 	~Actions();

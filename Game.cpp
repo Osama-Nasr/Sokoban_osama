@@ -89,7 +89,7 @@ void Game::menu()
 			updatingScreen();
 		}
 
-		action.takeActionStartingMenu(event, quit, options, mMenu);
+		action.takeActionStartingMenu(event, quit, options, mMenu, this->time);
 		updatingScreen();		
 	}
 }
@@ -136,6 +136,7 @@ void Game::game()
 				level.PlaySpeacificLevel(lvl, renderer);
 
 		level.drawMap();
+
 		mContinueMenu = level.checkWin();
 		SDL_RenderPresent(renderer);
 		SDL_Delay(500);
@@ -149,8 +150,9 @@ void Game::game()
 
 void Game::continueMenu()
 {
+	//text.winMessage(screen);
 	text.TextContinueMenu(screen, eti, points);
-	action.takeActionsContinueMenu(event, quit,mMenu,mContinueMenu, numberOfHits, numberOfgettingShooted, /*player,*/ points, /*enemies,*/ lvl);
+	action.takeActionsContinueMenu(event, this->level, this->time, quit, mMenu, mContinueMenu, points, lvl, renderer);
 
 	updatingScreen();
 }

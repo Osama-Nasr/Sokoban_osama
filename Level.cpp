@@ -125,9 +125,13 @@ void Level::clearMap()
 {
 	for (int z = 0; z < this->j; z++)
 		for (int w = 0; w < this->i; w++)
-		{
 			map[z][w] = Item();
-		}
+	player = new Item();
+
+	for (int i = 0; i < goalsNumber; i++)
+		goal[i] = new Item();
+	goalsNumber = 0;
+
 }
 
 void Level::drawMap()
@@ -145,6 +149,11 @@ void Level::drawMap()
 	{
 		goal[i]->draw();
 	}
+}
+
+void Level::setMapInit(bool mapInit)
+{
+	this->mapInit = mapInit;
 }
 
 bool Level::getMapInit()

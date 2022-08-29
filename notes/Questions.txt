@@ -16,8 +16,10 @@ for(int i = 0; i<3; i++)
 item[i] = new player();
 
  see if i can do the recusion or iterator in the checkMove() function speacilly in for checking the second object movement
-
+ 
 ***consider to add the convertion between the position and the x;y for the objects or set the place of drawing only it depends
 ***during the move check the we can move that to a funciton I belive or I need to check it again
 *** the images of the empty I might consider to change them to " " or I have to make the image to null
 *** the map the position of the goal can't be swapped but I didn't want to make uninizilaed so for that I initilzed the type to target
+
+** one problem that I used to have is the initialztion of the player and it turns about that I didn't pass it to the actions with & 
