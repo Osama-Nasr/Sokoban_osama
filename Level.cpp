@@ -3,7 +3,7 @@
 
 Level::Level(SDL_Renderer* renderer)
 {
-	cout << endl << "level(SDL_Renderer* renderer)" << endl;
+	//cout << endl << "level(SDL_Renderer* renderer)" << endl;
 	i = board::xSize;  //column
 	j = board::ySize;  //row
 
@@ -17,7 +17,7 @@ Level::Level(SDL_Renderer* renderer)
 
 Level::Level()
 {
-	cout << "Level()" << endl;
+	//cout << "Level()" << endl;
 	i = board::xSize;  //column
 	j = board::ySize;  //row
 
@@ -30,7 +30,7 @@ Level::Level()
 
 Level::~Level()
 {
-	cout << endl << "~Level" << endl;
+	//cout << endl << "~Level" << endl;
 	/*for (int j = 0; j < board::ySize; j++)
 	{
 		for (int i = 0; i < board::xSize; i++)
@@ -228,26 +228,27 @@ bool Level::checkMove(int moveDirection)
 	
 }
 
-void Level::movePlayer(int moveDirection)
+void Level::movePlayer(int moveDirection, SDL_Renderer* renderer)
 {
 	Item* tempPlace = nullptr;
 	int xTempPlayerTarget;
 	int yTempPlayerTarget;
 
+	SDL_RenderPresent(renderer);
 	switch (moveDirection)
 	{
 	case direction::UP:
 	{
 		xTempPlayerTarget = this->player->getPos()->x;
 		yTempPlayerTarget = this->player->getPos()->y - 1;
-		show();
+		//show();
 		//if there is a box infornt of the player we will move the box then we will move player
 		if (map[yTempPlayerTarget][xTempPlayerTarget].getType() == board::BOX) {
 			swapObjects(map[yTempPlayerTarget][xTempPlayerTarget], map[yTempPlayerTarget - 1][xTempPlayerTarget]);        //will swap the Item objects of the new position of the box with the old position 
 			updatingPositions(xTempPlayerTarget, yTempPlayerTarget - 1, board::BOX);
 		}
 		swapObjects(map[this->player->getPos()->y][this->player->getPos()->x], map[yTempPlayerTarget][xTempPlayerTarget]);
-		show();
+		//show();
 		//set the new parameters for player object
 		updatingPositions(xTempPlayerTarget, yTempPlayerTarget, board::PLAYER);
 	}
@@ -256,7 +257,7 @@ void Level::movePlayer(int moveDirection)
 	{
 		xTempPlayerTarget = this->player->getPos()->x;
 		yTempPlayerTarget = this->player->getPos()->y + 1;
-		show();
+		//show();
 
 		//if there is a box infornt of the player we will move the box then we will move player
 		if (map[yTempPlayerTarget][xTempPlayerTarget].getType() == board::BOX) {
@@ -266,7 +267,7 @@ void Level::movePlayer(int moveDirection)
 
 		//swapping the player only
 		swapObjects(map[this->player->getPos()->y][this->player->getPos()->x], map[yTempPlayerTarget][xTempPlayerTarget]);
-		show();
+		//show();
 
 		//set the new parameters for player object
 		updatingPositions(xTempPlayerTarget, yTempPlayerTarget, board::PLAYER);
@@ -276,14 +277,14 @@ void Level::movePlayer(int moveDirection)
 	{
 		xTempPlayerTarget = this->player->getPos()->x + 1;
 		yTempPlayerTarget = this->player->getPos()->y;
-		show();
+		//show();
 		//if there is a box infornt of the player we will move the box then we will move player
 		if (map[yTempPlayerTarget][xTempPlayerTarget].getType() == board::BOX) {
 			swapObjects(map[yTempPlayerTarget][xTempPlayerTarget], map[yTempPlayerTarget][xTempPlayerTarget + 1]);        //will swap the Item objects of the new position of the box with the old position 
 			updatingPositions(xTempPlayerTarget + 1, yTempPlayerTarget, board::BOX);
 		}
 		swapObjects(map[this->player->getPos()->y][this->player->getPos()->x], map[yTempPlayerTarget][xTempPlayerTarget]);
-		show();
+		//show();
 
 		//set the new parameters for player object
 		updatingPositions(xTempPlayerTarget, yTempPlayerTarget, board::PLAYER);
@@ -300,7 +301,7 @@ void Level::movePlayer(int moveDirection)
 			updatingPositions(xTempPlayerTarget - 1, yTempPlayerTarget, board::BOX);
 		}
 		swapObjects(map[this->player->getPos()->y][this->player->getPos()->x], map[yTempPlayerTarget][xTempPlayerTarget]);
-		show();
+		//show();
 		//set the new parameters for player object
 		updatingPositions(xTempPlayerTarget, yTempPlayerTarget, board::PLAYER);
 	}

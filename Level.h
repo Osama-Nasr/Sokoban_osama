@@ -30,7 +30,7 @@ public:
 	void clearMap();
 	void drawMap();
 	bool checkMove(int moveDirection);
-	void movePlayer(int moveDirection);
+	void movePlayer(int moveDirection, SDL_Renderer* renderer);
 	void swapObjects(Item& old, Item& mNew);	//https://www.geeksforgeeks.org/passing-reference-to-a-pointer-in-c/
 	void show();
 	void updatingPositions(int xNewPosition, int yNewPosition, char playerOrBox);			//this is for the changing the like position and image after swaping them

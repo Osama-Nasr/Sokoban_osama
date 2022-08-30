@@ -2,7 +2,7 @@
 
 Item::Item(SDL_Renderer* renderer, char const type, bool canMove, int i, int j, bool walkAbove)
 {
-	cout << "Item(SDL_Renderer* renderer, char const type,bool canMove, int i, int j ) " << endl;
+	//cout << "Item(SDL_Renderer* renderer, char const type,bool canMove, int i, int j ) " << endl;
 	setCanMove(canMove);
 	setType(type);
 	setRenderer(renderer);
@@ -27,7 +27,7 @@ Item::Item(SDL_Renderer* renderer, char const type, bool canMove, int i, int j, 
 
 Item::Item()
 {
-	cout << "Item() ";
+	//cout << "Item() ";
 	setType(board::EMPTY);
 	setCanMove(false);
 	setPos(-1, -1);
@@ -38,7 +38,7 @@ Item::Item()
 
 Item::~Item()
 {
-	cout << "~item ";
+	//cout << "~item ";
 	/*cout << "~item " << this->type << " " << this->pos.x << " " << this->pos.y << endl;
 	if (image != NULL) {
 		SDL_DestroyTexture(image);	

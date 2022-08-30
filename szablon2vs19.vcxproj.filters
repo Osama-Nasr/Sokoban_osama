@@ -99,5 +99,17 @@
     <Text Include="notes\Questions.txt">
       <Filter>Notes</Filter>
     </Text>
+    <Text Include="Levels\lvl4.txt">
+      <Filter>levels</Filter>
+    </Text>
+    <Text Include="Levels\lvl5.txt">
+      <Filter>levels</Filter>
+    </Text>
+    <Text Include="Levels\lvl6.txt">
+      <Filter>levels</Filter>
+    </Text>
+    <Text Include="Levels\lvl7.txt">
+      <Filter>levels</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -40,7 +40,7 @@ Game::~Game()
 	//	delete enemies[i];
 	//}
 	//delete bonuses;
-	cout << "~game" << endl;
+	//cout << "~game" << endl;
 
 	for(int j = 0; j < board::ySize; j++)
 	{
@@ -139,7 +139,7 @@ void Game::game()
 
 		mContinueMenu = level.checkWin();
 		SDL_RenderPresent(renderer);
-		SDL_Delay(500);
+		SDL_Delay(25);
 		//level.drawTest();
 		/*level.levelMode(&player, &bar, renderer, lvl, startCountingTimeForRehealing,
 			rehealingTime, time.getWorldTime(), enemies, bonuses, mContinueMenu,

@@ -300,22 +300,22 @@ void Actions::takePlayerActions(SDL_Event event, int& quit, Level &level, int lv
 			{
 			case SDLK_UP:
 				if (level.checkMove(direction::UP)) 
-					level.movePlayer(direction::UP);
+					level.movePlayer(direction::UP, renderer);
 		
 				break;
 			case SDLK_DOWN:
 				if (level.checkMove(direction::DOWN)) 
-					level.movePlayer(direction::DOWN);
+					level.movePlayer(direction::DOWN, renderer);
 	
 				break;
 			case SDLK_RIGHT:
 				if (level.checkMove(direction::RIGHT)) 
-					level.movePlayer(direction::RIGHT);
+					level.movePlayer(direction::RIGHT, renderer);
 
 				break;
 			case SDLK_LEFT:
 				if (level.checkMove(direction::LEFT)) 
-					level.movePlayer(direction::LEFT);
+					level.movePlayer(direction::LEFT, renderer);
 
 				break;
 			case SDLK_n:
