@@ -16,32 +16,51 @@ void Draw::TextStartingMenu(SDL_Surface* screen, SDL_Surface* eti)
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 30, text);
 }
 
-void Draw::TextOptions(SDL_Surface* screen, SDL_Surface* eti, double& enemyShootEverySEC, int activeOption, /*Player player,*/ int level, bool sequentail)
+void Draw::TextOptions(SDL_Surface* screen, SDL_Surface* eti, int activeOption, /*Player player,*/ int level, bool sequentail)
 {
 	int black = SDL_MapRGB(screen->format, 0x00, 0x00, 0x00);
 	int green = SDL_MapRGB(screen->format, 0x00, 0xFF, 0x00);
 	int red = SDL_MapRGB(screen->format, 0xFF, 0x00, 0x00);
 	int blue = SDL_MapRGB(screen->format, 0x11, 0x11, 0xCC);
 	
-	char* SequetailText;
-	if (sequentail == true)
-		SequetailText = "Yes";
-	else
-		SequetailText = "NO";
 
 	DrawRectangle(screen, 4, 4, game::SCREEN_WIDTH - 8, game::SCREEN_HEIGHT - 8, red, blue);
 	DrawSurface(screen, eti, game::SCREEN_WIDTH / 2, game::SCREEN_HEIGHT / 2 - 180);
 	DrawRectangle(screen, 150, screen->h / 2 - 30 + (activeOption * 30), 10, 10, red, red);
 	sprintf(text, "Info catalog (press O to go back)");
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 - 60, text);
-	sprintf(text, "1. Speed of the player (0...10): %d", 9999);
+	sprintf(text, "1. level: %d", level);
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 - 30, text);
-	sprintf(text, "2. shooting from enemy every sec: %3.2f", enemyShootEverySEC);
+	sprintf(text, "2. The list of the boards are:");
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2, text);
-	sprintf(text, "3. level: %d", level + 1);
-	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 30, text);
-	sprintf(text, "4. Play sequentailly: %c", SequetailText);
-	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 60, text);
+	
+	ifstream e;
+	e.open("Levels/list of boards.txt");
+	if (e.fail())
+		printf("list of boards file not opening");
+
+	string d;
+	int count;
+	e >> count;
+	char temp;
+	e.get(temp);
+	for (int i = 0; i < count; i++)
+	{
+		getline(e, d);
+		//printf << d << endl;
+		strcpy(text, d.c_str());
+		//sprintf(text, "    %d. nothing:", i + 1);
+		DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + ((i+1) * 15), text);
+	}
+	//sprintf(text, "2. shooting from enemy every sec: %3.2f", enemyShootEverySEC);
+	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2, text);
+	//sprintf(text, "3. nothing: %d", level + 1);
+	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 30, text);
+	//if (sequentail == true)
+	//	sprintf(text, "4. Play sequentailly: Yes");
+	//else
+	//	sprintf(text, "4. Play sequentailly: No");
+	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 60, text);
 }
 
 void Draw::TextGame(SDL_Surface* screen, double worldTime, double fps, int numberOfHits, int numberOfgettingShooted, int points)
@@ -78,7 +97,7 @@ void Draw::winMessage(SDL_Surface* screen) {
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text);
 }
 
-void Draw::TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, int points)
+void Draw::TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, Level level)
 {
 	int black = SDL_MapRGB(screen->format, 0x00, 0x00, 0x00);
 	int green = SDL_MapRGB(screen->format, 0x00, 0xFF, 0x00);
@@ -90,7 +109,7 @@ void Draw::TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, int points)
 	sprintf(text, "Congrates you WON");
 	//sprintf(text, "Continue? Press c if so, or press ESC to exit, or press n for menu");
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 - 30, text);
-	sprintf(text, "Your score is %d", points);
+	sprintf(text, "Moves: %d   Time: %0.2f", level.moves, level.finishTime);
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2, text);
 	//sprintf(text, "want to go to level 1 press 1 & level 2 press 2 and so on");
 	sprintf(text, "P - next level, M - menu");

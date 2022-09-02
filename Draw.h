@@ -3,6 +3,8 @@
 #include<string.h>
 #include <string>
 #include "Constants.h"
+#include <fstream>
+#include "Level.h"
 
 using namespace std;
 extern "C" {
@@ -19,10 +21,10 @@ public:
 
 	char text[128];
 	void TextStartingMenu(SDL_Surface* screen, SDL_Surface* eti);
-	void TextOptions(SDL_Surface *screen, SDL_Surface* eti, double& enemyShootEverySEC, int activeOption, /*Player player,*/ int level, bool sequentail);
+	void TextOptions(SDL_Surface *screen, SDL_Surface* eti, int activeOption, /*Player player,*/ int level, bool sequentail);
 	void TextGame(SDL_Surface* screen, double worldTime, double fps, int numberOfHits, int numberOfgettingShooted, int points);
 	void winMessage(SDL_Surface* screen);
-	void TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, int points);
+	void TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, Level level);
 
 	void DrawString(SDL_Surface* screen, int x, int y, const char* text);
 	void DrawSurface(SDL_Surface* screen, SDL_Surface* sprite, int x, int y);

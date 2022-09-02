@@ -5,6 +5,7 @@
 #include "Time.h"
 #include "Level.h"
 #include "Constants.h"
+#include "LinkedList.h"
 #include <stdlib.h>
 
 extern "C" {
@@ -31,11 +32,13 @@ private:
 	double rehealingTime = 0;
 	double shootTime = 0;
 	double bonusesTime = 0;
+	bool newGameFlage = true;
 
 	Draw text;
 	Actions action;
 	Time time;
 	Level level;
+	LinkedList results;
 
 	SDL_Renderer* renderer;
 	SDL_Event event;

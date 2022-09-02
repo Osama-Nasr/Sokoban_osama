@@ -326,16 +326,15 @@ void Level::updatingPositions(int xNewPosition, int yNewPosition, char playerOrB
 
 bool Level::checkWin()
 {
-	int win = true;
+	
 	for (int i = 0; i < goalsNumber; i++)
 	{
 		if (map[goal[i]->getPos()->y][goal[i]->getPos()->x].getType() != board::BOX)
 		{
-			win = false;
-			return win;
+			return false; //didn't win 
 		}
 	}
-	return win;
+	return true;	//won
 }
 
 void Level::swapObjects(Item &old, Item &mNew)	//https://www.geeksforgeeks.org/passing-reference-to-a-pointer-in-c/

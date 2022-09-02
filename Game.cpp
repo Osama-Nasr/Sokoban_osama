@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#define position_beging 0
 Game::Game()
 {
 	 eti = SDL_LoadBMP("image/eti.bmp");
@@ -84,11 +85,10 @@ void Game::menu()
 
 		while (options && !quit)
 		{
-			text.TextOptions(screen, eti, enemyShootEverySEC, activeOption, /*player,*/ lvl, sequentail);
-			action.takeActionForOption(event, /*player,*/ options,activeOption, enemyShootEverySEC, lvl, quit, sequentail);
+			text.TextOptions(screen, eti, activeOption, lvl, sequentail);
+			action.takeActionForOption(event, options, activeOption, lvl, quit, sequentail);
 			updatingScreen();
 		}
-
 		action.takeActionStartingMenu(event, quit, options, mMenu, this->time);
 		updatingScreen();		
 	}
@@ -106,6 +106,11 @@ void Game::game()
 		// delta is the same time in seconds
 		
 		time.setDelta((time.getT2() - time.getT1()) * 0.001);
+		if (newGameFlage == true)		//this if statment is to rest the delta becuase it will be running so for that
+		{
+			time.setDelta(0.0);
+			newGameFlage = false;
+		}
 		time.setT1(time.getT2());//430 / 6 / fps
 
 		time.setWorldTime(time.getWorldTime() + time.getDelta());
@@ -124,6 +129,7 @@ void Game::game()
 		};
 
 		text.TextGame(screen, time.getWorldTime(), time.getFps(), numberOfHits, numberOfgettingShooted, points);
+		cout << "GAworld time " << time.getWorldTime() << endl;
 
 		updatingScreen();
 	
@@ -137,23 +143,30 @@ void Game::game()
 
 		level.drawMap();
 
-		mContinueMenu = level.checkWin();
+		if (level.checkWin()) {
+			mContinueMenu = true;
+			level.finishTime = time.getWorldTime();
+			if (results.getChangedFirst() == false)
+				results.changeFirst(level.moves, time.getWorldTime(), this->lvl);
+			else
+				results.Insert(position_beging, level.moves, time.getWorldTime(), this->lvl);
+		}
+
 		SDL_RenderPresent(renderer);
 		SDL_Delay(25);
 		//level.drawTest();
 		/*level.levelMode(&player, &bar, renderer, lvl, startCountingTimeForRehealing,
 			rehealingTime, time.getWorldTime(), enemies, bonuses, mContinueMenu,
 			bonusesTime, shootTime, enemyShootEverySEC, numberOfgettingShooted, numberOfHits, points);*/
-
+		time.setFrames(time.getFrames() + 1);
 	}
 }
 
 void Game::continueMenu()
 {
 	//text.winMessage(screen);
-	text.TextContinueMenu(screen, eti, points);
-	action.takeActionsContinueMenu(event, this->level, this->time, quit, mMenu, mContinueMenu, points, lvl, renderer);
-
+	text.TextContinueMenu(screen, eti, level);
+	action.takeActionsContinueMenu(event, this->level, this->time, quit, mMenu, mContinueMenu, points, lvl, renderer, newGameFlage);
 	updatingScreen();
 }
 

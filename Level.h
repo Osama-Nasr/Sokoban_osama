@@ -38,6 +38,9 @@ public:
 
 	void setMapInit(bool mapInit);
 	bool getMapInit();
+	
+	int moves = 0;
+	double finishTime = 0.0;
 
 	Item** map;
 	Item* goal[game::MAX_GOALS];

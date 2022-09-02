@@ -1,12 +1,8 @@
 #include "Actions.h"
 
-void Actions::takeActionForOption(SDL_Event event,/* Player& player,*/ bool options, int activeOption,
-	double& enemyShootEverySEC, int& level, int& quit, bool& sequentail)
+void Actions::takeActionForOption(SDL_Event event, bool& options, int& activeOption, int& level, int& quit, bool& sequentail)
 {
 	while (SDL_PollEvent(&event)) {
-
-		cout << "taking actions" << endl;
-		cout << activeOption << endl;
 
 		switch (event.type) {
 		case SDL_KEYDOWN:		
@@ -19,16 +15,12 @@ void Actions::takeActionForOption(SDL_Event event,/* Player& player,*/ bool opti
 			{
 				switch (activeOption) {
 				case 0:
-					/*player.increaseSpeedX_left();
-					player.increaseSpeedX_right();
-					player.increaseSpeedY_down();
-					player.increaseSpeedY_up();*/
+					if(++level > game::total_levels) 
+						level -= 1;
 					break;
 				case 1:
-					enemyShootEverySEC += 0.5;
 					break;
 				case 2:
-					level += 1;
 					break;
 				case 3:
 					sequentail = (sequentail + 1) % 2;
@@ -47,17 +39,12 @@ void Actions::takeActionForOption(SDL_Event event,/* Player& player,*/ bool opti
 			{
 				switch (activeOption) {
 				case 0:
-
-					/*player.decreaseSpeedX_left();
-					player.decreaseSpeedX_right();
-					player.decreaseSpeedY_down();
-					player.decreaseSpeedY_up();*/
+					if(--level <= 0)
+					level += 1;
 					break;
 				case 1:
-					enemyShootEverySEC -= 0.5;
 					break;
 				case 2:
-					level -= 1;
 					break;
 				case 3:
 					sequentail = (sequentail + 1) % 2;
@@ -79,7 +66,6 @@ void Actions::takeActionForOption(SDL_Event event,/* Player& player,*/ bool opti
 			else if (event.key.keysym.sym == SDLK_2)
 			{
 				activeOption = 1;
-			    cout <<"setiing activeOption 2works" << endl;
 			}
 			else if (event.key.keysym.sym == SDLK_3)
 			{
@@ -145,7 +131,7 @@ void Actions::takeActionStartingMenu(SDL_Event event, int& quit, bool& options, 
 	};
 }
 
-void Actions::takeActionsContinueMenu(SDL_Event event, Level& level, Time& time, int& quit, bool& mMenu, bool& mContinueMenu, int& points, int& lvl, SDL_Renderer* renderer)
+void Actions::takeActionsContinueMenu(SDL_Event event, Level& level, Time& time, int& quit, bool& mMenu, bool& mContinueMenu, int& points, int& lvl, SDL_Renderer* renderer, bool& mNewGameFlage)
 {
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -158,6 +144,7 @@ void Actions::takeActionsContinueMenu(SDL_Event event, Level& level, Time& time,
 					lvl = 1;
 				mContinueMenu = 0;
 				time.setWorldTime(0.0);
+				mNewGameFlage = true;
 				level.clearMap();
 				level.PlaySpeacificLevel(lvl, renderer);
 
@@ -183,113 +170,7 @@ void Actions::takeActionsContinueMenu(SDL_Event event, Level& level, Time& time,
 		};
 		//SDL_Delay(20);
 	};
-	//while (SDL_PollEvent(&event)) {
-	//	switch (event.type) {
-	//	case SDL_KEYDOWN:
-	//		switch (event.key.keysym.sym) {
-	//		case SDLK_ESCAPE: {
-	//			quit = 1;
-	//		}
-	//			break;
-	//		case SDLK_p:
-
-	//		if (event.key.keysym.sym == SDLK_ESCAPE) quit = 1;
-	//		/*else if (event.key.keysym.sym == SDLK_d)
-	//		{
-	//			movementMode = (movementMode + 1) % 2;
-	//		}*/
-	//		else if (event.key.keysym.sym == SDLK_n)
-	//		{
-	//			mMenu = 1;
-	//			mContinueMenu = 0;
-	//			numberOfHits = 0;
-	//			numberOfgettingShooted = 0;
-	//			//player.blood = 1.0f;
-	//			points = 0;
-	//			//player.setPos(320, 370);
-	//			/*for (int i = 0; i < numberOfenemies; i++)
-	//			{
-	//				enemies[i]->blood = 1.0f;
-	//				enemies[i]->setLife(true);
-	//			}*/
-	//		}
-	//		else if (event.key.keysym.sym == SDLK_c)
-	//		{
-	//			//player.setPos(320, 370);
-	//			mContinueMenu = 0;
-	//			points = 0;
-	//		//	player.blood = 1.0f;
-	//			/*for (int i = 0; i < numberOfenemies; i++)
-	//			{
-	//				enemies[i]->blood = 1.0f;
-	//				enemies[i]->setLife(true);
-	//			}*/
-	//		}
-	//		else if (event.key.keysym.sym == SDLK_1)
-	//		{
-	//			//player.setPos(320, 370);
-	//			mContinueMenu = 0;
-	//			points = 0;
-	//			//player.blood = 1.0f;
-	//			lvl = 0;
-	//			/*for (int i = 0; i < numberOfenemies; i++)
-	//			{
-	//				enemies[i]->blood = 1.0f;
-	//				enemies[i]->setLife(true);
-	//			}*/
-	//		}
-	//		else if (event.key.keysym.sym == SDLK_2)
-	//		{
-	//			//player.setPos(320, 370);
-	//			mContinueMenu = 0;
-	//			points = 0;
-	//			//player.blood = 1.0f;
-	//			lvl = 1;
-	//			/*for (int i = 0; i < numberOfenemies; i++)
-	//			{
-	//				enemies[i]->blood = 1.0f;
-	//				enemies[i]->setLife(true);
-	//			}*/
-	//		}
-	//		else if (event.key.keysym.sym == SDLK_3)
-	//		{
-	//			//player.setPos(320, 370);
-	//			mContinueMenu = 0;
-	//			points = 0;
-	//			//player.blood = 1.0f;
-	//			lvl = 2;
-	//			/*for (int i = 0; i < numberOfenemies; i++)
-	//			{
-	//				enemies[i]->blood = 1.0f;
-	//				enemies[i]->setLife(true);
-	//			}*/
-	//		}
-	//		else if (event.key.keysym.sym == SDLK_4)
-	//		{
-	//			//player.setPos(320, 370);
-	//			mContinueMenu = 0;
-	//			points = 0;
-	//			//player.blood = 1.0f;
-	//			lvl = 3;
-	//			/*for (int i = 0; i < numberOfenemies; i++)
-	//			{
-	//				enemies[i]->blood = 1.0f;
-	//				enemies[i]->setLife(true);
-	//			}*/
-	//		}
-
-	//	}
-	//		break;
-	//	case SDL_KEYUP:
-	//		//etiSpeed = 1.0;
-	//		break;
-	//	case SDL_QUIT:
-	//		quit = 1;
-	//		break;
-	//	};
-	//};
 }
-
 
 void Actions::takePlayerActions(SDL_Event event, int& quit, Level &level, int lvl, SDL_Renderer* renderer)
 {
@@ -301,22 +182,23 @@ void Actions::takePlayerActions(SDL_Event event, int& quit, Level &level, int lv
 			case SDLK_UP:
 				if (level.checkMove(direction::UP)) 
 					level.movePlayer(direction::UP, renderer);
-		
+				level.moves++;
+
 				break;
 			case SDLK_DOWN:
 				if (level.checkMove(direction::DOWN)) 
 					level.movePlayer(direction::DOWN, renderer);
-	
+				level.moves++;
 				break;
 			case SDLK_RIGHT:
 				if (level.checkMove(direction::RIGHT)) 
 					level.movePlayer(direction::RIGHT, renderer);
-
+				level.moves++;
 				break;
 			case SDLK_LEFT:
 				if (level.checkMove(direction::LEFT)) 
 					level.movePlayer(direction::LEFT, renderer);
-
+				level.moves++;
 				break;
 			case SDLK_n:
 				level.clearMap();

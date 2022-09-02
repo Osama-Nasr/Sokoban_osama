@@ -36,6 +36,9 @@
     <ClCompile Include="Time.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="LinkedList.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actions.h">
@@ -57,6 +60,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
@@ -109,6 +115,9 @@
       <Filter>levels</Filter>
     </Text>
     <Text Include="Levels\lvl7.txt">
+      <Filter>levels</Filter>
+    </Text>
+    <Text Include="Levels\list of boards.txt">
       <Filter>levels</Filter>
     </Text>
   </ItemGroup>

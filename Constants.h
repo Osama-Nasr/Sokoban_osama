@@ -5,6 +5,8 @@
 namespace game {
 	const int SCREEN_HEIGHT = 500 + 36;
 	const int SCREEN_WIDTH = 800;
+	//const int SCREEN_HEIGHT =900;
+	//const int SCREEN_WIDTH = 1200;
 	const int item_size_width = 50;
 	const int item_size_high = 50;
 	const int MAX_GOALS = 7;
@@ -22,6 +24,8 @@ namespace board {
 
 	const int xSize = 14;	//those are the boarders size of the x in the .txt files in levels
 	const int ySize = 9;	//those are the boarders size of the y in the .txt files in levels
+	//const int xSize = 20;	//those are the boarders size of the x in the .txt files in levels
+	//const int ySize = 15;	//those are the boarders size of the y in the .txt files in levels
 
 	const char EMPTY = '*';
 	const char WALL = '#';

@@ -23,3 +23,6 @@ item[i] = new player();
 *** the map the position of the goal can't be swapped but I didn't want to make uninizilaed so for that I initilzed the type to target
 
 ** one problem that I used to have is the initialztion of the player and it turns about that I didn't pass it to the actions with & 
+@@ the time is not precise from one level to another it doesn't starts from zero clearly
+
+where did i stop 1 sep:
