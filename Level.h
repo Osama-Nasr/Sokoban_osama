@@ -41,6 +41,7 @@ public:
 	
 	int moves = 0;
 	double finishTime = 0.0;
+	bool saved = false;
 
 	Item** map;
 	Item* goal[game::MAX_GOALS];

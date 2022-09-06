@@ -7,6 +7,7 @@
 #include "Constants.h"
 #include "LinkedList.h"
 #include <stdlib.h>
+#define POSITION_BEG 0
 
 extern "C" {
 #include"./SDL2-2.0.10/include/SDL.h"
@@ -38,7 +39,7 @@ private:
 	Actions action;
 	Time time;
 	Level level;
-	LinkedList results;
+	LinkedList* results;
 
 	SDL_Renderer* renderer;
 	SDL_Event event;
@@ -56,6 +57,7 @@ public:
 	void game();
 	void continueMenu();
 	void updatingScreen();
+	void readingFromFileForResults();
 };
 
 

@@ -2,6 +2,9 @@
 #include <iostream>
 #include "Level.h"
 #include "Time.h"
+#include "LinkedList.h"
+#define position_beging 0
+
 using namespace std;
 
 extern "C" {
@@ -16,7 +19,7 @@ public:
 	void takeActionStartingMenu(SDL_Event event, int& quit, bool& options, bool& mMenu, Time& time);
 	void takePlayerActions(SDL_Event event, int& quit, Level &level, int lvl, SDL_Renderer* renderer);
 	void takeActionsContinueMenu(SDL_Event event, Level& level, Time& time, int& quit, bool& mMenu, bool& mContinueMenu,
-		int& points, int& lvl, SDL_Renderer* renderer, bool& mNewGameFlage);
+		int& points, int& lvl, SDL_Renderer* renderer, bool& mNewGameFlage, LinkedList*& results);
 
 	Actions();
 	~Actions();

@@ -1,6 +1,5 @@
 #include "Game.h"
 
-#define position_beging 0
 Game::Game()
 {
 	 eti = SDL_LoadBMP("image/eti.bmp");
@@ -29,6 +28,19 @@ Game::Game()
 	text = Draw();
 	action = Actions();
 	time = Time();
+	results = new LinkedList[game::total_levels * 2 + 1];		//mutible by two so that the array will be like this rs = {[lvl1.moves],[lvl1.FT],[lvl2.moeves],[lvl2.FT],..}and the first place will be empty
+	for (int i = 0; i < game::total_levels * 2 + 1; i++)
+	{
+		results[i] = LinkedList();
+	}
+	//results[1].setNumberOfInsertions(4);  this is working
+	readingFromFileForResults();
+	for (int i = 0; i < game::total_levels * 2 + 1; i++)
+	{
+		cout << i << " ";
+		results[i].Display();
+		cout << endl;
+	}
 
 	time.setT1(SDL_GetTicks());
 }
@@ -38,10 +50,10 @@ Game::~Game()
 	//// delete enemies;
 	//for (int i = 0; i < numberOfenemies; i++)
 	//{
-	//	delete enemies[i];
+	//	delete enemies[i];x
 	//}
 	//delete bonuses;
-	//cout << "~game" << endl;
+	cout << "~game" << endl;
 
 	for(int j = 0; j < board::ySize; j++)
 	{
@@ -55,6 +67,10 @@ Game::~Game()
 		delete[] level.map[i];
 	}
 	delete[] level.map;
+	 
+	this->level.~Level();
+	this->text.~Draw();
+	this->results->clear();
 
 	ItemQuit();
 	SDL_FreeSurface(screen);
@@ -65,7 +81,6 @@ Game::~Game()
 	SDL_Quit();
 
 }
-
 
 void Game::start()
 {
@@ -128,8 +143,7 @@ void Game::game()
 			time.setFpsTimer(time.getFpsTimer() - 0.5 );
 		};
 
-		text.TextGame(screen, time.getWorldTime(), time.getFps(), numberOfHits, numberOfgettingShooted, points);
-		cout << "GAworld time " << time.getWorldTime() << endl;
+		text.TextGame(screen, time.getWorldTime(), time.getFps(), level.moves);
 
 		updatingScreen();
 	
@@ -146,10 +160,6 @@ void Game::game()
 		if (level.checkWin()) {
 			mContinueMenu = true;
 			level.finishTime = time.getWorldTime();
-			if (results.getChangedFirst() == false)
-				results.changeFirst(level.moves, time.getWorldTime(), this->lvl);
-			else
-				results.Insert(position_beging, level.moves, time.getWorldTime(), this->lvl);
 		}
 
 		SDL_RenderPresent(renderer);
@@ -166,7 +176,13 @@ void Game::continueMenu()
 {
 	//text.winMessage(screen);
 	text.TextContinueMenu(screen, eti, level);
-	action.takeActionsContinueMenu(event, this->level, this->time, quit, mMenu, mContinueMenu, points, lvl, renderer, newGameFlage);
+	for (int i = 0; i < game::total_levels * 2 + 1; i++)
+	{
+		cout << i << " ";
+		results[i].Display();
+		cout << endl;
+	}
+	action.takeActionsContinueMenu(event, this->level, this->time, quit, mMenu, mContinueMenu, points, lvl, renderer, newGameFlage, results);
 	updatingScreen();
 }
 
@@ -176,5 +192,32 @@ void Game::updatingScreen()
 	//		SDL_RenderClear(renderer);
 	SDL_RenderCopy(renderer, scrtex, NULL, NULL);
 	SDL_RenderPresent(renderer);
+}
+
+void Game::readingFromFileForResults()
+{
+	ifstream rs;
+	int lvl = 0;
+	long long int moves = 0;
+	long double FT = 0.0;
+	rs.open("results/result.txt");
+	if (rs.fail())
+		cerr << "Error in opening a file";
+	else {
+
+		while (rs >> lvl >> moves >> FT)
+		{
+			if (results[lvl + (lvl - 1)].getChangedFirst() == false)
+			{
+				results[lvl + (lvl - 1)].changeFirst(moves, FT, lvl);
+				results[lvl * 2].changeFirst(moves, FT, lvl);
+			}
+			else
+			{
+				results[lvl + (lvl - 1)].Insert(POSITION_BEG, moves, FT, lvl);		// for this formula check out my execl file in the notes dircetoy we will ignore the first space
+				results[lvl * 2].Insert(POSITION_BEG, moves, FT, lvl);				
+			}
+		}
+	}
 }
 

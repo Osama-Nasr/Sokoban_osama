@@ -22,7 +22,7 @@ public:
 	char text[128];
 	void TextStartingMenu(SDL_Surface* screen, SDL_Surface* eti);
 	void TextOptions(SDL_Surface *screen, SDL_Surface* eti, int activeOption, /*Player player,*/ int level, bool sequentail);
-	void TextGame(SDL_Surface* screen, double worldTime, double fps, int numberOfHits, int numberOfgettingShooted, int points);
+	void TextGame(SDL_Surface* screen, double worldTime, double fps, int moves);
 	void winMessage(SDL_Surface* screen);
 	void TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, Level level);
 

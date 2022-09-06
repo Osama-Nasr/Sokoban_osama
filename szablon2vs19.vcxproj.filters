@@ -13,6 +13,9 @@
     <Filter Include="Notes">
       <UniqueIdentifier>{e3663ade-c0ff-4f7e-b682-816385718df5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="results">
+      <UniqueIdentifier>{f842c568-6af1-45c2-9bf7-7c32f70a5ff1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -120,5 +123,13 @@
     <Text Include="Levels\list of boards.txt">
       <Filter>levels</Filter>
     </Text>
+    <Text Include="results\result.TXT">
+      <Filter>results</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="notes\storing resutls in a array fourmla.xlsx">
+      <Filter>Notes</Filter>
+    </None>
   </ItemGroup>
 </Project>

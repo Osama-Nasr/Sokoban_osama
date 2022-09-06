@@ -58,6 +58,10 @@
     <Text Include="Levels\lvl6.txt" />
     <Text Include="Levels\lvl7.txt" />
     <Text Include="notes\Questions.txt" />
+    <Text Include="results\result.TXT" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="notes\storing resutls in a array fourmla.xlsx" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

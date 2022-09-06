@@ -63,7 +63,7 @@ void Draw::TextOptions(SDL_Surface* screen, SDL_Surface* eti, int activeOption, 
 	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 60, text);
 }
 
-void Draw::TextGame(SDL_Surface* screen, double worldTime, double fps, int numberOfHits, int numberOfgettingShooted, int points)
+void Draw::TextGame(SDL_Surface* screen, double worldTime, double fps, int moves)
 {
 	int black = SDL_MapRGB(screen->format, 0x00, 0x00, 0x00);
 	int green = SDL_MapRGB(screen->format, 0x00, 0xFF, 0x00);
@@ -76,7 +76,7 @@ void Draw::TextGame(SDL_Surface* screen, double worldTime, double fps, int numbe
 	sprintf(text, "Esc - exit, elapsed time = %.1lf s  %.0lf frames / s", worldTime, fps);
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 10, text);
 	//	      "Esc - exit, \030 - faster, \031 - slower"
-	sprintf(text, "N - play again, hits: %d, got hit: %d, Total points: %d", numberOfHits, numberOfgettingShooted, points);
+	sprintf(text, "N - play again, Total moves: %d", moves);
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text);
 }
 
@@ -112,8 +112,14 @@ void Draw::TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, Level level)
 	sprintf(text, "Moves: %d   Time: %0.2f", level.moves, level.finishTime);
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2, text);
 	//sprintf(text, "want to go to level 1 press 1 & level 2 press 2 and so on");
-	sprintf(text, "P - next level, M - menu");
+	sprintf(text, "P - next level, M - menu, S - save result");
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 30, text);
+
+	if (level.saved == true)
+		sprintf(text, "Result SAVED");
+	else
+		sprintf(text, "Result NOT SAVED");
+	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 60, text);
 }
 
 void Draw::DrawString(SDL_Surface* screen, int x, int y, const char* text)
