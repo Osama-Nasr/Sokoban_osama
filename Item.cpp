@@ -2,7 +2,6 @@
 
 Item::Item(SDL_Renderer* renderer, char const type, bool canMove, int i, int j, bool walkAbove)
 {
-	//cout << "Item(SDL_Renderer* renderer, char const type,bool canMove, int i, int j ) " << endl;
 	setCanMove(canMove);
 	setType(type);
 	setRenderer(renderer);
@@ -38,12 +37,18 @@ Item::Item()
 
 Item::~Item()
 {
-	//cout << "~item ";
-	/*cout << "~item " << this->type << " " << this->pos.x << " " << this->pos.y << endl;
-	if (image != NULL) {
+	/*if (image != NULL) {
 		SDL_DestroyTexture(image);	
 		image = NULL;
 	}*/
+}
+
+void Item::manualDestructor()
+{
+	if (image != NULL) {
+		SDL_DestroyTexture(image);
+		image = NULL;
+	}
 }
 
 void ItemInit() 
@@ -61,7 +66,6 @@ void Item::setRenderer(SDL_Renderer *dest)
 {
 	ren = dest;
 }
-
 
 bool Item::loadImage(char filename[])
 {

@@ -10,22 +10,6 @@ LinkedList::LinkedList() {
 	setChangedFirst(false);
 }
 
-LinkedList::LinkedList(int* A, int n) {
-
-	head = new Node;
-	head->move = A[0];
-	head->next = nullptr;
-	Node* tail = head;
-
-	for (int i = 1; i < n; i++) {
-		Node* t = new Node;
-		t->move = A[i];
-		t->next = tail->next; // tail->next is pointing to NULL
-		tail->next = t;
-		tail = t;
-	}
-}
-
 LinkedList::~LinkedList() {
 	/*Node* p = head;
 
@@ -52,23 +36,6 @@ void LinkedList::clear() {
 	}
 }
 
-void LinkedList::writeToFile()
-{
-	fstream rs;
-	rs.open("results/result.txt", fstream::app);
-	if (rs.fail())
-	{
-		cerr << "Error while opening the file results/result";
-	}
-
-	Node* p = head;
-
-	while (p != nullptr && p->move >= 0) {		//check as well if the number is integer as if it was nigitive it means that it is empty
-		rs << p->lvl << " " << p->move << " " << p->finishTime << endl;
-		p = p->next;
-	}
-}
-
 void LinkedList::writeToFile(int lvl, long long int move, long double finishTime)
 {
 	fstream rs;
@@ -78,23 +45,7 @@ void LinkedList::writeToFile(int lvl, long long int move, long double finishTime
 		cerr << "Error while opening the file results/result";
 	}
 		rs << lvl << " " << move << " " << finishTime << endl;
-}
-
-void LinkedList::readFromFile()
-{
-	int lvl = 0;
-	long long int moves = 0;
-	long double FT = 0.0;
-	ifstream rs;
-	rs.open("results/result.txt");
-
-	//Insert(POSITION_BEG, moves, FT, lvl);
-	while (rs >> lvl >> moves >> FT)
-	{
-		
-	}
-	if (rs.fail())
-		cerr << "Error in opening a file";
+	rs.close();
 }
 
 void LinkedList::Display() {
@@ -126,122 +77,10 @@ int LinkedList::Length() {
 	return length;
 }
 
-void LinkedList::Insert(int index, long long int num, long double FT, int lvl, Node* head) {
-
-	numberOfInsertions++;
-	if (index < 0 || index > numberOfInsertions) {
-		return;
-	}
-
-	Node* p = head;
-	Node* t = new Node;
-	t->move = num;
-	t->lvl = lvl;
-	t->finishTime = FT;
-
-
-	if (index == 0) {
-		t->next = head;
-		head = t;
-	}
-	else {
-		for (int i = 0; i < index - 1; i++) {
-			p = p->next;
-		}
-		t->next = p->next;
-
-		p->next = t;
-	}
-}
-
 void LinkedList::Insert(int index, long long int num, long double FT, int lvl) {
 
 	numberOfInsertions++;
 	if (index < 0 || index > numberOfInsertions) {
-		return;
-	}
-
-	Node* p = this->head;
-	Node* t = new Node;
-	t->move = num;
-	t->lvl = lvl;
-	t->finishTime = FT;
-
-
-	if (index == 0) {
-		t->next = head;
-		head = t;
-	}
-	else {
-		for (int i = 0; i < index - 1; i++) {
-			p = p->next;
-		}
-		t->next = p->next;
-
-		p->next = t;
-	}
-}
-
-void LinkedList::Insert(int index, long long int num, long double FT, int lvl, int flage) {
-
-	incrementNumberOfInsertions();
-	if (index < 0 || index > this->numberOfInsertions) {
-		return;
-	}
-
-	Node* p = this->head;
-	Node* t = new Node;
-	t->move = num;
-	t->lvl = lvl;
-	t->finishTime = FT;
-
-
-	if (index == 0) {
-		t->next = head;
-		head = t;
-	}
-	else {
-		for (int i = 0; i < index - 1; i++) {
-			p = p->next;
-		}
-		t->next = p->next;
-
-		p->next = t;
-	}
-}
-
-void LinkedList::Insert(int index, long long int num, long double FT, int lvl, Node* head, int& numOfInsertions) {
-
-	numOfInsertions = numOfInsertions + 1;
-	if (index < 0 || index > numOfInsertions) {
-		return;
-	}
-
-	Node* p = head;
-	Node* t = new Node;
-	t->move = num;
-	t->lvl = lvl;
-	t->finishTime = FT;
-
-
-	if (index == 0) {
-		t->next = head;
-		head = t;
-	}
-	else {
-		for (int i = 0; i < index - 1; i++) {
-			p = p->next;
-		}
-		t->next = p->next;
-
-		p->next = t;
-	}
-}
-
-void LinkedList::Insert(int index, long long int num, long double FT, int lvl, int& numOfInsertions, int flage) {
-
-	numOfInsertions = numOfInsertions + 1;
-	if (index < 0 || index > numOfInsertions) {
 		return;
 	}
 
@@ -277,9 +116,9 @@ int LinkedList::Delete(int index) {
 	if (index == 1) {
 		if (Length() == 1)
 		{
-			head->move = -1;			//that means that the node it empty
-			head->finishTime = -1;			//that means that the node it empty
-			head->lvl = -1;			//that means that the node it empty
+			head->move = -1;		
+			head->finishTime = -1;	
+			head->lvl = -1;			
 			changedFirst = false;		//so if it was laster on needed to insert we will just change it (flage)
 		}
 		else {
@@ -299,33 +138,6 @@ int LinkedList::Delete(int index) {
 	return x;
 }
 
-void LinkedList::changeFirst(long long int num, long double FT, int lvl, Node* head, bool& CF, int& numOfInsertion)
-{
-	Node* p = head;
-	p->move = num;
-	p->finishTime = FT;
-	p->lvl = lvl;
-	CF = true;
-	numOfInsertion = numOfInsertion + 1;
-
-	//setChangedFirst(true);		//doesn't work
-	//changedFirst = true;			//doesn't work
-	//this->numberOfInsertions++;   //doesn't work
-	//numberOfInsertions++;		    //doesn't work
-}
-
-void LinkedList::changeFirst(long long int num, long double FT, int lvl, Node* head)
-{
-	Node* p = head;
-	p->move = num;
-	p->finishTime = FT;
-	p->lvl = lvl;
-	//CF = false;
-	setChangedFirst(true);
-	//changedFirst = true;
-	numberOfInsertions++;
-}
-
 void LinkedList::changeFirst(long long int num, long double FT, int lvl)
 {
 	Node* p = this->head;
@@ -338,14 +150,151 @@ void LinkedList::changeFirst(long long int num, long double FT, int lvl)
 	numberOfInsertions++;
 }
 
+void LinkedList::MergeSort(Node*& hd, int typeSort)
+{
+	Node* head = hd;
+	Node* a;
+	Node* b;
+
+	/* Base case -- length 0 or 1 */
+	if ((head == NULL) || (head->next == NULL)) {
+		return;
+	}
+
+	/* Split head into 'a' and 'b' sublists */
+	FrontBackSplit(head, a, b);
+
+	/* Recursively sort the sublists */
+	MergeSort(a, typeSort);
+	MergeSort(b, typeSort);
+
+	/* answer = merge the two sorted lists together */
+	//*headRef = SortedMerge(a, b);
+	hd = SortedMerge(a, b, typeSort);
+}
+/* See https:// www.geeksforgeeks.org/?p=3622 for details of this
+function */
+Node* LinkedList::SortedMerge(Node* a, Node* b, int typeSort)
+{
+	Node* result = NULL;
+
+	/* Base cases */
+	if (a == NULL)
+		return (b);
+	else if (b == NULL)
+		return (a);
+
+	/* Pick either a or b, and recur */
+	if (typeSort == MOVES)
+	{
+		if (a->move <= b->move) {
+			result = a;
+			result->next = SortedMerge(a->next, b, typeSort);
+		}
+		else {
+			result = b;
+			result->next = SortedMerge(a, b->next, typeSort);
+		}
+		return (result);
+	}
+	else if (typeSort == FINISH_TIME)
+	{
+		if (a->finishTime <= b->finishTime) {
+			result = a;
+			result->next = SortedMerge(a->next, b, typeSort);
+		}
+		else {
+			result = b;
+			result->next = SortedMerge(a, b->next, typeSort);
+		}
+		return (result);
+	}
+}
+
+void LinkedList::FrontBackSplit(Node* source, Node*& frontRef, Node*& backRef)
+{
+	Node* fast;
+	Node* slow;
+	slow = source;
+	fast = source->next;
+
+	/* Advance 'fast' two nodes, and advance 'slow' one node */
+	while (fast != NULL) {
+		fast = fast->next;
+		if (fast != NULL) {
+			slow = slow->next;
+			fast = fast->next;
+		}
+	}
+
+	/* 'slow' is before the midpoint in the list, so split it in two
+	at that point. */
+	frontRef = source;
+	backRef = slow->next;
+	slow->next = NULL;
+}
+
+void LinkedList::sortedInsert(Node*& head_ref, int typeSort, long long int move, long double FT, int lvl)
+{
+	/* allocate node */
+	Node* new_node = new Node();
+
+	/* put in the data */
+	new_node->move = move;
+	new_node->finishTime = FT;
+	new_node->lvl = lvl;
+	new_node->next = NULL;
+
+	Node* current;
+	/* Special case for the head end */
+	if (typeSort == MOVES)
+	{
+		if (head_ref == NULL
+			|| head_ref->move
+			>= new_node->move) {
+			new_node->next = head_ref;
+			head_ref = new_node;
+		}
+		else {
+			/* Locate the node before the
+	 point of insertion */
+			current = head_ref;
+			while (current->next != NULL
+				&& current->next->move
+				< new_node->move) {
+				current = current->next;
+			}
+			new_node->next = current->next;
+			current->next = new_node;
+		}
+	}
+	else if (typeSort == FINISH_TIME)
+	{
+		if (head_ref == NULL
+			|| head_ref->finishTime
+			>= new_node->finishTime) {
+			new_node->next = head_ref;
+			head_ref = new_node;
+		}
+		else {
+			/* Locate the node before the
+	 point of insertion */
+			current = head_ref;
+			while (current->next != NULL
+				&& current->next->finishTime
+				< new_node->finishTime) {
+				current = current->next;
+			}
+			new_node->next = current->next;
+			current->next = new_node;
+		}
+	}
+	this->numberOfInsertions++;
+}
+
 int LinkedList::getNumberOfInsertions()
 {
 	return numberOfInsertions;
-}
-
-int* LinkedList::getNumberOfInsertions(int flage)
-{
-	return &numberOfInsertions;
 }
 
 void LinkedList::setNumberOfInsertions(int n)
@@ -353,19 +302,9 @@ void LinkedList::setNumberOfInsertions(int n)
 	this->numberOfInsertions = n;
 }
 
-void LinkedList::incrementNumberOfInsertions()
-{
-	this->numberOfInsertions++;
-}
-
 bool LinkedList::getChangedFirst()
 {
 	return changedFirst;
-}
-
-bool* LinkedList::getChangedFirst(int flage)
-{
-	return &changedFirst;
 }
 
 void LinkedList::setChangedFirst(bool x)
@@ -373,7 +312,3 @@ void LinkedList::setChangedFirst(bool x)
 	this->changedFirst = x;
 }
 
-void LinkedList::setChangedFirst(bool &CF, bool set)
-{
-	CF = set;
-}

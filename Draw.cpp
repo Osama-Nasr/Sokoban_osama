@@ -16,7 +16,7 @@ void Draw::TextStartingMenu(SDL_Surface* screen, SDL_Surface* eti)
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 30, text);
 }
 
-void Draw::TextOptions(SDL_Surface* screen, SDL_Surface* eti, int activeOption, /*Player player,*/ int level, bool sequentail)
+void Draw::TextOptions(SDL_Surface* screen, SDL_Surface* eti, int activeOption, int level, int showResultsLvl, LinkedList* results)
 {
 	int black = SDL_MapRGB(screen->format, 0x00, 0x00, 0x00);
 	int green = SDL_MapRGB(screen->format, 0x00, 0xFF, 0x00);
@@ -26,7 +26,13 @@ void Draw::TextOptions(SDL_Surface* screen, SDL_Surface* eti, int activeOption, 
 
 	DrawRectangle(screen, 4, 4, game::SCREEN_WIDTH - 8, game::SCREEN_HEIGHT - 8, red, blue);
 	DrawSurface(screen, eti, game::SCREEN_WIDTH / 2, game::SCREEN_HEIGHT / 2 - 180);
-	DrawRectangle(screen, 150, screen->h / 2 - 30 + (activeOption * 30), 10, 10, red, red);
+
+	// draw the red regrantgle 
+	if(activeOption < 2 )
+		DrawRectangle(screen, 200, screen->h / 2 - 30 + (activeOption * 30), 10, 10, red, red);
+	else
+		DrawRectangle(screen, 200, screen->h / 2 - 30 + (activeOption * 45), 10, 10, red, red);
+
 	sprintf(text, "Info catalog (press O to go back)");
 	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 - 60, text);
 	sprintf(text, "1. level: %d", level);
@@ -44,23 +50,42 @@ void Draw::TextOptions(SDL_Surface* screen, SDL_Surface* eti, int activeOption, 
 	e >> count;
 	char temp;
 	e.get(temp);
-	for (int i = 0; i < count; i++)
+	for (int i = 1; i <= count; i++)
 	{
 		getline(e, d);
 		//printf << d << endl;
 		strcpy(text, d.c_str());
 		//sprintf(text, "    %d. nothing:", i + 1);
-		DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + ((i+1) * 15), text);
+		DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + (i * 15), text);
 	}
-	//sprintf(text, "2. shooting from enemy every sec: %3.2f", enemyShootEverySEC);
-	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2, text);
-	//sprintf(text, "3. nothing: %d", level + 1);
-	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 30, text);
-	//if (sequentail == true)
-	//	sprintf(text, "4. Play sequentailly: Yes");
-	//else
-	//	sprintf(text, "4. Play sequentailly: No");
-	//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 60, text);
+
+	sprintf(text, "3. show the results of which level: %d", showResultsLvl);
+	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 65, text);
+	sprintf(text, "sorted    moves         finishing time");
+	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 80, text);
+	sprintf(text, "_______________________________________");
+	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 83, text);
+	sprintf(text, "moves      time        moves      time");
+	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 93, text);
+	sprintf(text, "_______________________________________");
+	DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 98, text);
+	
+	int numberOfReults = results[showResultsLvl + (showResultsLvl - 1)].getNumberOfInsertions();
+	int i = 1;
+
+	Node* move = results[showResultsLvl + (showResultsLvl - 1)].getHead();
+	Node* FT = results[showResultsLvl *2].getHead();
+
+	while (numberOfReults > 0 && screen->h / 2 + 98 +(i * 15) <=  (game::SCREEN_HEIGHT - 50)) {
+
+		sprintf(text, "%d.    %lld          %0.2f s      %lld          %0.2f s    ", i, move->move, move->finishTime, FT->move, FT->finishTime);
+		DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, screen->h / 2 + 98 + (i*15), text);
+		--numberOfReults; ++i;
+		move = move->next;
+		FT = FT->next;
+	}
+
+	e.close();
 }
 
 void Draw::TextGame(SDL_Surface* screen, double worldTime, double fps, int moves)
@@ -194,4 +219,9 @@ Draw::Draw() {
 Draw::~Draw()
 {
 	//SDL_FreeSurface(charset);
+}
+
+void Draw::manualDestructor()
+{
+	SDL_FreeSurface(charset);
 }

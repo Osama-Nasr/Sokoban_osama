@@ -1,6 +1,6 @@
 #include "Actions.h"
 
-void Actions::takeActionForOption(SDL_Event event, bool& options, int& activeOption, int& level, int& quit, bool& sequentail)
+void Actions::takeActionForOption(SDL_Event event, bool& options, int& activeOption, int& level, int& quit, int& showResultsLvl)
 {
 	while (SDL_PollEvent(&event)) {
 
@@ -21,17 +21,8 @@ void Actions::takeActionForOption(SDL_Event event, bool& options, int& activeOpt
 				case 1:
 					break;
 				case 2:
-					break;
-				case 3:
-					sequentail = (sequentail + 1) % 2;
-					break;
-				case 4:
-					break;
-				case 5:
-					break;
-				case 6:
-					break;
-				case 7:
+					if (++showResultsLvl > game::total_levels)
+						showResultsLvl -= 1;
 					break;
 				}
 			}
@@ -45,17 +36,8 @@ void Actions::takeActionForOption(SDL_Event event, bool& options, int& activeOpt
 				case 1:
 					break;
 				case 2:
-					break;
-				case 3:
-					sequentail = (sequentail + 1) % 2;
-					break;
-				case 4:
-					break;
-				case 5:
-					break;
-				case 6:
-					break;
-				case 7:
+					if (--showResultsLvl <= 0)
+						showResultsLvl += 1;
 					break;
 				}
 			}
@@ -70,26 +52,6 @@ void Actions::takeActionForOption(SDL_Event event, bool& options, int& activeOpt
 			else if (event.key.keysym.sym == SDLK_3)
 			{
 				activeOption = 2;
-			}
-			else if (event.key.keysym.sym == SDLK_4)
-			{
-				activeOption = 3;
-			}
-			else if (event.key.keysym.sym == SDLK_5)
-			{
-				activeOption = 4;
-			}
-			else if (event.key.keysym.sym == SDLK_6)
-			{
-				activeOption = 5;
-			}
-			else if (event.key.keysym.sym == SDLK_7)
-			{
-				activeOption = 6;
-			}
-			else if (event.key.keysym.sym == SDLK_8)
-			{
-				activeOption = 7;
 			}
 			break;
 		case SDL_KEYUP:
@@ -131,8 +93,7 @@ void Actions::takeActionStartingMenu(SDL_Event event, int& quit, bool& options, 
 	};
 }
 
-void Actions::takeActionsContinueMenu(SDL_Event event, Level& level, Time& time, int& quit, bool& mMenu, bool& mContinueMenu,
-	int& points, int& lvl, SDL_Renderer* renderer, bool& mNewGameFlage, LinkedList *&results)
+void Actions::takeActionsContinueMenu(SDL_Event event, Level& level, Time& time, int& quit, bool& mMenu, bool& mContinueMenu, int& lvl, SDL_Renderer* renderer, bool& mNewGameFlage, LinkedList *&results)
 {
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -173,15 +134,16 @@ void Actions::takeActionsContinueMenu(SDL_Event event, Level& level, Time& time,
 				{
 					bool tempCF = results[lvl + (lvl - 1)].getChangedFirst();
 
+					//add to the LinkedList
 					if (tempCF == false)
 					{
 						results[lvl + (lvl - 1)].changeFirst(level.moves, time.getWorldTime(), lvl);
 						results[lvl * 2].changeFirst(level.moves, time.getWorldTime(), lvl);
 					}
-					else 
+					else
 					{
-						results[lvl + (lvl - 1)].Insert(POSITION_BEG, level.moves, time.getWorldTime(), lvl);
-						results[lvl * 2].Insert(POSITION_BEG, level.moves, time.getWorldTime(), lvl);
+						results[lvl + (lvl - 1)].sortedInsert(results[lvl + (lvl - 1)].head, MOVES, level.moves, time.getWorldTime(), lvl);
+						results[lvl * 2].sortedInsert(results[lvl * 2].head, FINISH_TIME, level.moves, time.getWorldTime(), lvl);
 					}
 					
 					//write the result to the file of results

@@ -33,53 +33,39 @@ Game::Game()
 	{
 		results[i] = LinkedList();
 	}
-	//results[1].setNumberOfInsertions(4);  this is working
-	readingFromFileForResults();
-	for (int i = 0; i < game::total_levels * 2 + 1; i++)
-	{
-		cout << i << " ";
-		results[i].Display();
-		cout << endl;
-	}
 
+	readingFromFileForResults();
 	time.setT1(SDL_GetTicks());
 }
 
 Game::~Game()
 {
-	//// delete enemies;
-	//for (int i = 0; i < numberOfenemies; i++)
-	//{
-	//	delete enemies[i];x
-	//}
-	//delete bonuses;
 	cout << "~game" << endl;
 
-	for(int j = 0; j < board::ySize; j++)
-	{
-		for(int i = 0; i < board::xSize; i++){
-			level.map[j][i].~Item();
-		}
-	}
+	//for(int j = 0; j < board::ySize; j++)
+	//{
+	//	for(int i = 0; i < board::xSize; i++){
+	//		level.map[j][i].manualDestructor();
+	//	}
+	//}
 
-	for (int i = 0; i < board::ySize; i++)
-	{
-		delete[] level.map[i];
-	}
-	delete[] level.map;
+	//for (int i = 0; i < board::ySize; i++)
+	//{
+	//	delete[] level.map[i];
+	//}
+	//delete[] level.map;
 	 
-	this->level.~Level();
-	this->text.~Draw();
+	this->level.manualDestructor();
+	this->text.manualDestructor();
 	this->results->clear();
 
 	ItemQuit();
 	SDL_FreeSurface(screen);
+	SDL_FreeSurface(eti);
 	SDL_DestroyTexture(scrtex);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
-
 	SDL_Quit();
-
 }
 
 void Game::start()
@@ -100,8 +86,8 @@ void Game::menu()
 
 		while (options && !quit)
 		{
-			text.TextOptions(screen, eti, activeOption, lvl, sequentail);
-			action.takeActionForOption(event, options, activeOption, lvl, quit, sequentail);
+			text.TextOptions(screen, eti, activeOption, lvl, showResultsLvl, results);
+			action.takeActionForOption(event, options, activeOption, lvl, quit, showResultsLvl);
 			updatingScreen();
 		}
 		action.takeActionStartingMenu(event, quit, options, mMenu, this->time);
@@ -130,8 +116,6 @@ void Game::game()
 
 		time.setWorldTime(time.getWorldTime() + time.getDelta());
 
-		//time distance += etiSpeed * delta;
-
 		int black = SDL_MapRGB(screen->format, 0x00, 0x00, 0x00);
 		SDL_FillRect(screen, NULL, black);
 
@@ -149,10 +133,7 @@ void Game::game()
 	
 		action.takePlayerActions(event, quit, level, this->lvl, renderer);
 		
-		if (sequentail == true)
-			level.playSeqaunceLevels();
-		else
-			if (level.getMapInit() == false)
+		if (level.getMapInit() == false)
 				level.PlaySpeacificLevel(lvl, renderer);
 
 		level.drawMap();
@@ -164,25 +145,14 @@ void Game::game()
 
 		SDL_RenderPresent(renderer);
 		SDL_Delay(25);
-		//level.drawTest();
-		/*level.levelMode(&player, &bar, renderer, lvl, startCountingTimeForRehealing,
-			rehealingTime, time.getWorldTime(), enemies, bonuses, mContinueMenu,
-			bonusesTime, shootTime, enemyShootEverySEC, numberOfgettingShooted, numberOfHits, points);*/
 		time.setFrames(time.getFrames() + 1);
 	}
 }
 
 void Game::continueMenu()
 {
-	//text.winMessage(screen);
 	text.TextContinueMenu(screen, eti, level);
-	for (int i = 0; i < game::total_levels * 2 + 1; i++)
-	{
-		cout << i << " ";
-		results[i].Display();
-		cout << endl;
-	}
-	action.takeActionsContinueMenu(event, this->level, this->time, quit, mMenu, mContinueMenu, points, lvl, renderer, newGameFlage, results);
+	action.takeActionsContinueMenu(event, this->level, this->time, quit, mMenu, mContinueMenu, lvl, renderer, newGameFlage, results);
 	updatingScreen();
 }
 
@@ -200,6 +170,7 @@ void Game::readingFromFileForResults()
 	int lvl = 0;
 	long long int moves = 0;
 	long double FT = 0.0;
+
 	rs.open("results/result.txt");
 	if (rs.fail())
 		cerr << "Error in opening a file";
@@ -219,5 +190,14 @@ void Game::readingFromFileForResults()
 			}
 		}
 	}
+
+	//sorting the list if exite.  Merge sort
+	for (int i = 1; i <= game::total_levels; i++)
+	{
+		results[i + (i - 1)].MergeSort(results[i + (i - 1)].head, MOVES);
+		results[i * 2].MergeSort(results[i * 2].head, FINISH_TIME);
+	}
+
+	rs.close();
 }
 

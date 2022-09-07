@@ -18,6 +18,7 @@ public:
 	Item(SDL_Renderer* renderer, char const type, bool canMove, int i, int j, bool walkAbove);
  	Item();
 	~Item();
+	void manualDestructor();
 	//virtual Item();
 
 	void setRenderer(SDL_Renderer *renderer);

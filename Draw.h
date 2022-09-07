@@ -5,6 +5,7 @@
 #include "Constants.h"
 #include <fstream>
 #include "Level.h"
+#include "LinkedList.h"
 
 using namespace std;
 extern "C" {
@@ -18,10 +19,11 @@ private:
 public:
 	Draw();
 	~Draw();
+	void manualDestructor();
 
 	char text[128];
 	void TextStartingMenu(SDL_Surface* screen, SDL_Surface* eti);
-	void TextOptions(SDL_Surface *screen, SDL_Surface* eti, int activeOption, /*Player player,*/ int level, bool sequentail);
+	void TextOptions(SDL_Surface *screen, SDL_Surface* eti, int activeOption, int level, int showResultsLvl, LinkedList* results);
 	void TextGame(SDL_Surface* screen, double worldTime, double fps, int moves);
 	void winMessage(SDL_Surface* screen);
 	void TextContinueMenu(SDL_Surface* screen, SDL_Surface* eti, Level level);

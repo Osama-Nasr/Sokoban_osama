@@ -20,13 +20,9 @@ public:
 	Level(SDL_Renderer* renderer);
 	Level();
 	~Level();
-	/*void levelMode(Player* player, Bar* bar, SDL_Renderer* renderer, int level, bool& startCountingTimeForRehealing,
-		double& rehealingTime, double worldTime, Enemy* enemies[], Bonuses* bonuses[], bool& continueMenu,
-		double& bonusesTime, double& shootTime, double enemyShootEverySEC, int& numberOfgettingShooted, int& numberOfHits, int& points);
-	*/
-	void initialize(int lvlNo);
+	void manualDestructor();
+
 	void PlaySpeacificLevel(int lvlNo, SDL_Renderer* renderer);
-	void playSeqaunceLevels();
 	void clearMap();
 	void drawMap();
 	bool checkMove(int moveDirection);

@@ -3,7 +3,6 @@
 
 Level::Level(SDL_Renderer* renderer)
 {
-	//cout << endl << "level(SDL_Renderer* renderer)" << endl;
 	i = board::xSize;  //column
 	j = board::ySize;  //row
 
@@ -12,12 +11,10 @@ Level::Level(SDL_Renderer* renderer)
 		map[z] = new Item[this->i]();
 
 	player = new Item();
-	//test = Item(3,renderer);
 }
 
 Level::Level()
 {
-	//cout << "Level()" << endl;
 	i = board::xSize;  //column
 	j = board::ySize;  //row
 
@@ -45,24 +42,21 @@ Level::~Level()
 	delete[] map;*/
 }
 
-/*void Level::levelMode(Player* player, Bar* bar, SDL_Renderer* renderer, int level, bool& startCountingTimeForRehealing,
-	double& rehealingTime, double worldTime, Enemy* enemies[], Bonuses* bonuses[], bool& continueMenu,
-	double& bonusesTime, double& shootTime, double enemyShootEverySEC, int& numberOfgettingShooted, int& numberOfHits, int& points)
-{
-	player->move(player->getPlayerSpeedx(), player->getPlayerSpeedy());
-	player->draw();
-	player->bulletMove();
-	bar->setSize(200 * player->blood, bar->getPos()->y / 12);
-	bar->draw();
-	bool allFalse = true;
-	bool allTrue = true;
+void Level::manualDestructor() {
 
-	SDL_RenderPresent(renderer);
-	SDL_Delay(25);
-}*/
-
-void Level::initialize(int lvlNo)
-{
+	for (int j = 0; j < board::ySize; j++)
+	{
+		for (int i = 0; i < board::xSize; i++)
+		{
+			map[j][i].manualDestructor();
+		}
+	}
+	for (int i = 0; i < board::ySize; i++)
+	{
+		delete[] map[i];
+	}
+	delete[] map;
+	//delete goal; 
 }
 
 void Level::PlaySpeacificLevel(int lvlNo, SDL_Renderer* renderer)
@@ -101,12 +95,6 @@ void Level::PlaySpeacificLevel(int lvlNo, SDL_Renderer* renderer)
 			case board::EMPTY: 
 				map[j][i] = Item(renderer, board::EMPTY, false, i, j, true);
 				break;
-			//case '+': //Player on goal
-			//	arr.at(i * y + j) = 6;
-			//	break;
-			//case board::OUT: //OUT
-			//	map[j][i] = Item(board::OUT, false);
-			//	break;
 			}
 			file_reader.get(z);
 			if (z == '\n')
@@ -115,10 +103,6 @@ void Level::PlaySpeacificLevel(int lvlNo, SDL_Renderer* renderer)
 	}
 	file_reader.close();
 	mapInit = true;
-}
-
-void Level::playSeqaunceLevels()
-{
 }
 
 void Level::clearMap()
@@ -224,8 +208,6 @@ bool Level::checkMove(int moveDirection)
 	default:
 		break;
 	}
-
-	
 }
 
 void Level::movePlayer(int moveDirection, SDL_Renderer* renderer)

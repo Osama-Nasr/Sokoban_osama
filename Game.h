@@ -8,6 +8,8 @@
 #include "LinkedList.h"
 #include <stdlib.h>
 #define POSITION_BEG 0
+#define MOVES 1
+#define FINISH_TIME 2
 
 extern "C" {
 #include"./SDL2-2.0.10/include/SDL.h"
@@ -23,16 +25,7 @@ private:
 	int activeOption = 0;
 	bool mContinueMenu = 0;
 	int lvl = 1;
-	bool sequentail = false;
-
-	double enemyShootEverySEC = 1.0;
-	int numberOfHits = 0;
-	int numberOfgettingShooted = 0;
-	int points = 0;
-	bool startCountingTimeForRehealing = true;
-	double rehealingTime = 0;
-	double shootTime = 0;
-	double bonusesTime = 0;
+	int showResultsLvl = lvl;
 	bool newGameFlage = true;
 
 	Draw text;
