@@ -249,9 +249,7 @@ void LinkedList::sortedInsert(Node*& head_ref, int typeSort, long long int move,
 	/* Special case for the head end */
 	if (typeSort == MOVES)
 	{
-		if (head_ref == NULL
-			|| head_ref->move
-			>= new_node->move) {
+		if (head_ref == NULL || head_ref->move >= new_node->move) {
 			new_node->next = head_ref;
 			head_ref = new_node;
 		}
@@ -259,9 +257,7 @@ void LinkedList::sortedInsert(Node*& head_ref, int typeSort, long long int move,
 			/* Locate the node before the
 	 point of insertion */
 			current = head_ref;
-			while (current->next != NULL
-				&& current->next->move
-				< new_node->move) {
+			while (current->next != NULL && current->next->move < new_node->move) {
 				current = current->next;
 			}
 			new_node->next = current->next;
